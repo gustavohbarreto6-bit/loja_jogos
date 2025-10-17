@@ -1,0 +1,88 @@
+CREATE DATABASE PixelPlay;
+USE PixelPlay;
+
+CREATE TABLE game (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(110),
+    plataforma VARCHAR(50),
+    genero VARCHAR(90),
+    ano_lancamento CHAR(4),
+    descricao VARCHAR(500)
+);
+CREATE TABLE cliente (
+    cpf CHAR(11) PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    idade INT(3),
+    email VARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE venda (
+    cliente_cpf CHAR(11),
+    game_id INT,
+    data_venda DATE,
+    PRIMARY KEY (cliente_cpf, game_id),
+    FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf),
+    FOREIGN KEY (game_id) REFERENCES game(id)
+);
+
+
+INSERT INTO game (titulo, plataforma, genero, ano_lancamento, descricao)
+VALUES 
+  ("Forza Horizon 5", "Xbox Series X", "Corrida/Mundo Aberto", "2021", "Um dos jogos de corrida mais realistas e belos, ambientado no México. Oferece mundo aberto, centenas de carros e eventos variados com gráficos impressionantes"),
+  ("Gran Turismo", "Playstation 5", "Simulador de Corrida", "2022", "Simulador de corrida com foco em realismo e detalhes técnicos dos veículos. Ideal para quem ama tunar carros e correr em pistas icônicas."),
+  ("Rocket League", "PC", "Esporte", "2015", "Mistura futebol com carros turbinados! Jogadores controlam veículos que tentam marcar gols em uma arena, em partidas rápidas e caóticas."),
+  ("EAFC26", "Playstation 5", "Esporte", "2025", "Simulador realista de futebol com clubes e seleções oficiais. Permite jogar campeonatos, modo carreira e partidas online com amigos."),
+  ("Mortal Kombat", "Multiplataforma", "Luta", "2023", "Clássico jogo de luta conhecido pelos personagens icônicos e golpes brutais. Oferece modo história, multiplayer e os famosos 'fatalities'.");
+
+
+INSERT INTO cliente(cpf, nome, idade, email)
+VALUES 
+(23145879012, "Rebeca Barbieri", 18, "rebeca18@gmail.com"),
+(51820933470, "Rafael Oliveira Souza", 32, "rafael.oliveira32@yahoo.com"),
+(78261199341, "Ludmila Lopes", 22, "lud.lopes22@gmail.com"),
+(10422987652, "Thiago Mendes Ferreira", 29, "thiago.mendes29@outlook.com"),
+(68530021497, "Camila Nogueira Santos", 26, "camila.nogueira26@gmail.com"),
+(43981566724, "João Pedro Lima", 30, "joaopedro.lima30@gmail.com"),
+(51299743860, "Fernanda Alves Moreira", 35, "fernanda.moreira35@yahoo.com"),
+(32457098105, "Bruno Henrique Duarte", 28, "bruno.h.duarte28@hotmail.com"),
+(21984756320, "Nicolas Tukaze", 24, "nicolas.tukaze24@gmail.com"),
+(32789542187, "Gustavo Barreto", 27, "gbrtsports36@hotmail.com"),
+(54798231645, "Vinícius Vila", 25, "vinicius.vila25@yahoo.com"),
+(63872915408, "Breno Oliveira", 30, "brenoolv30@gmail.com"),
+(70938465217, "Enzo Avanze", 22, "avanzinho22@outlook.com"),
+(89017236451, "Raul Lopes", 29, "raul.mago29@gmail.com"),
+(43791028675, "Diogo Nascimento", 26, "diogo.bahia6@yahoo.com"),
+(68123947018, "Felipe Heitor", 28, "fhdecria28@gmail.com");
+
+
+SELECT titulo, plataforma, genero, ano_lancamento FROM game;
+
+
+SELECT nome, email FROM cliente WHERE email LIKE '%@gmail.com';
+
+
+SELECT * FROM venda 
+WHERE MONTH(data_venda) = 10;
+
+
+SELECT titulo, genero FROM game
+WHERE genero LIKE '%luta%'
+ORDER BY titulo ASC;
+
+
+UPDATE cliente 
+SET email = 'gbrt3611@gmail.com'
+WHERE cpf = '32789542187';
+
+
+UPDATE game 
+SET ano_lancamento = '2027'
+WHERE titulo = 'EAFC26';
+
+
+DELETE FROM game 
+WHERE titulo = 'Gran Turismo';
+
+DELETE FROM venda 
+WHERE data_venda < (CURDATE() - INTERVAL 30 DAY);
